@@ -32,10 +32,13 @@ async function run() {
 
     // User relted APIs
     const userCollection = client.db("hobbyHubDb").collection("users")
+    const groupCollection = client.db("hobbyHubDb").collection("groups")
 
+    // users related APIS
     app.post("/users", async(req,res)=>{
         const newUser = req.body
         const result = await userCollection.insertOne(newUser)
+        console.log(newUser)
         res.send(result)
     })
 
@@ -43,6 +46,19 @@ async function run() {
         const result = await userCollection.find().toArray()
         res.send(result)
     })
+
+    // Group Related APIS
+    app.post("/groups", async(req,res)=>{
+        const newGroup = req.body 
+        const result = await groupCollection.insertOne(newGroup)
+        res.send(result)
+    })
+
+    app.get("/groups", async(req,res)=>{
+        const result = await groupCollection.find().toArray()
+        res.send(result)
+    })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
