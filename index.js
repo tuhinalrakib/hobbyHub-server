@@ -29,6 +29,21 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+    // User relted APIs
+    const userCollection = client.db("hobbyHubDb").collection("users")
+
+    app.post("/users", async(req,res)=>{
+        const newUser = req.body
+        const result = await userCollection.insertOne(newUser)
+        res.send(result)
+    })
+
+    app.get("/users", async(req,res)=>{
+        const result = userCollection.find().toArray()
+        res.send(result)
+    })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
