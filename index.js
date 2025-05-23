@@ -1,6 +1,6 @@
 const express = require("express")
 const cors = require("cors")
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require("dotenv").config()
 const port = process.env.PORT || 3000
 
@@ -59,6 +59,12 @@ async function run() {
         res.send(result)
     })
 
+    app.get("/groups/:id", async(req,res)=>{
+        const id = req.params.id
+        const filter = { _id : new ObjectId(id)}
+        const result = await groupCollection.findOne(filter)
+        res.send(result)
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
