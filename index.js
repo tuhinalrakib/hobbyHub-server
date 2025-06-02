@@ -47,6 +47,13 @@ async function run() {
         res.send(result)
     })
 
+    app.get("/userByEmail", async (req,res)=>{
+        const email = req.query.email 
+        const query = { email : email }
+        const result = await userCollection.findOne(query)
+        res.send(result)
+    })
+
     // Group Related APIS
     app.post("/groups", async(req,res)=>{
         const newGroup = req.body 
