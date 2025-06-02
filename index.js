@@ -35,6 +35,13 @@ async function run() {
     const groupCollection = client.db("hobbyHubDb").collection("groups")
 
     // users related APIS
+    app.get("/users",async(req,res)=>{
+        const email = req.query.email 
+        const query = { email : email}
+        const result = await userCollection.findOne(query)
+        res.send(result)
+    })
+
     app.post("/users", async(req,res)=>{
         const newUser = req.body
         const result = await userCollection.insertOne(newUser)
@@ -44,13 +51,6 @@ async function run() {
 
     app.get("/users", async(req,res)=>{
         const result = await userCollection.find().toArray()
-        res.send(result)
-    })
-
-    app.get("/users",async(req,res)=>{
-        const email = req.query.email 
-        const query = { email : email}
-        const result = await userCollection.findOne(query).toArray()
         res.send(result)
     })
 
