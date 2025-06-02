@@ -47,10 +47,10 @@ async function run() {
         res.send(result)
     })
 
-    app.get("/usersByEmail",async(req,res)=>{
+    app.get("/users",async(req,res)=>{
         const email = req.query.email 
         const query = { email : email}
-        const result = await userCollection.find(query).toArray()
+        const result = await userCollection.findOne(query).toArray()
         res.send(result)
     })
 
